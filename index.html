@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,76 +7,110 @@
 <style>
   :root{
     color-scheme: light;
-    --ink:#2e3a3a; --ink-soft:#46514f; --olive:#5c6650; --cream:#f5f3ee;
-    --line:#dcd9d1; --paper:#ffffff; --muted:#7b817c;
-    --notstarted:#9aa0a0; --progress:#c9871f; --blocked:#b4472e; --complete:#4f7d4a;
+    --bg:#f5f3ee; --paper:#ffffff; --text:#2e3a3a; --text-soft:#46514f; --muted:#7b817c;
+    --line:#dcd9d1; --line-soft:#eeece6; --bar-track:#e8e6df; --note-bg:#f0eee7;
+    --header-bg:#2e3a3a; --header-text:#ffffff; --header-sub:#c7cec9; --brand:#b9c2bd;
+    --chip-bg:#ffffff; --chip-text:#2e3a3a;
+    --olive:#5c6650; --notstarted:#9aa0a0; --progress:#c9871f; --complete:#4f7d4a;
+    --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
+  }
+  html[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#171d1c; --paper:#212a29; --text:#e9edec; --text-soft:#c2c9c7; --muted:#8b9491;
+    --line:#33403e; --line-soft:#2b3534; --bar-track:#2b3534; --note-bg:#1b2322;
+    --header-bg:#0f1413; --header-text:#f3f6f5; --header-sub:#aab3b0; --brand:#8a958f;
+    --chip-bg:#f3f6f5; --chip-text:#1c2322;
+    --olive:#7d8a6e; --notstarted:#6b726f; --progress:#d39a3f; --complete:#5f9a58;
+    --sec-num-bg:#3a4543; --sec-border:#445250;
   }
   *{box-sizing:border-box;}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);background:var(--cream);line-height:1.5;-webkit-font-smoothing:antialiased;}
+    color:var(--text);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
   .wrap{max-width:1000px;margin:0 auto;padding:32px 28px 64px;}
 
-  header{background:var(--ink);color:#fff;border-radius:10px;padding:30px 34px;margin-bottom:24px;
-    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
-  .brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b9c2bd;margin-bottom:14px;}
-  header h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px;text-transform:uppercase;font-weight:800;}
-  header .sub{color:#c7cec9;font-size:14px;}
-  .meta{text-align:right;font-size:13px;color:#c7cec9;min-width:190px;}
-  .meta .big{font-size:22px;color:#fff;font-weight:700;}
+  header{background:var(--header-bg);color:var(--header-text);border-radius:10px;padding:24px 32px 28px;margin-bottom:22px;}
+  .cobrand{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .chip{background:var(--chip-bg);color:var(--chip-text);border-radius:8px;padding:9px 14px;display:flex;align-items:center;
+    min-height:40px;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+  .chip img{display:block;max-height:26px;width:auto;}
+  .chip .wm{font-weight:800;letter-spacing:.4px;font-size:14px;}
+  .chip .wm small{display:block;font-weight:600;font-size:8.5px;letter-spacing:2px;color:var(--muted);margin-top:1px;}
+  .chip .wm-edlio{font-size:18px;letter-spacing:0;}
+  .amp{color:var(--header-sub);font-size:16px;opacity:.7;}
+  .hrow{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  .brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:10px;}
+  header h1{font-size:25px;margin:0 0 6px;letter-spacing:.5px;text-transform:uppercase;font-weight:800;}
+  header .sub{color:var(--header-sub);font-size:14px;}
+  .meta{text-align:right;font-size:13px;color:var(--header-sub);min-width:190px;}
+  .meta .big{font-size:19px;color:var(--header-text);font-weight:700;}
   .meta div{margin-bottom:3px;}
 
-  .overall{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:26px;}
-  .overall .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
-  .overall h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin:0;color:var(--ink-soft);}
-  .overall .pct{font-size:30px;font-weight:800;color:var(--ink);}
-  .bar{height:14px;background:#e8e6df;border-radius:8px;overflow:hidden;}
-  .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--complete));border-radius:8px;transition:width .3s ease;}
-  .counts{font-size:12.5px;color:var(--muted);margin-top:10px;}
-  .counts b{color:var(--ink);}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+  button.act{border:1px solid var(--text);background:var(--text);color:var(--bg);border-radius:7px;padding:9px 16px;
+    font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.act.ghost{background:transparent;color:var(--text-soft);border-color:var(--line);}
+  button.act:hover{opacity:.9;}
+  .updated{font-size:12.5px;color:var(--muted);margin-left:auto;}
+  .updated b{color:var(--text-soft);}
 
   section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 24px 18px;margin-bottom:22px;}
-  .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--ink);margin-bottom:6px;}
-  .sec-num{background:var(--ink);color:#fff;font-weight:700;font-size:13px;width:26px;height:26px;border-radius:6px;
+  .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--sec-border);margin-bottom:6px;}
+  .sec-num{background:var(--sec-num-bg);color:#fff;font-weight:700;font-size:13px;width:26px;height:26px;border-radius:6px;
     display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .sec-head h3{margin:0;font-size:15px;letter-spacing:.6px;text-transform:uppercase;}
   .sec-prog{margin-left:auto;font-size:12px;color:var(--muted);}
 
+  /* Overview */
+  .objective{font-size:14.5px;color:var(--text-soft);margin:14px 0 4px;max-width:760px;}
+  .contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+  .contact{border:1px solid var(--line);border-radius:9px;padding:12px 14px;}
+  .contact .cn{font-weight:700;font-size:13.5px;}
+  .contact .cr{font-size:12px;color:var(--progress);font-weight:600;margin-top:2px;}
+  .contact .co{font-size:12px;color:var(--muted);margin-top:2px;}
+
+  .overall .toprow{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 10px;}
+  .overall h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin:0;color:var(--text-soft);}
+  .overall .pct{font-size:30px;font-weight:800;color:var(--text);}
+  .bar{height:14px;background:var(--bar-track);border-radius:8px;overflow:hidden;}
+  .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--complete));border-radius:8px;transition:width .3s ease;}
+  .counts{font-size:12.5px;color:var(--muted);margin-top:10px;}
+  .counts b{color:var(--text);}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px;}
+  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+
   table{width:100%;border-collapse:collapse;}
   th{text-align:left;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
     font-weight:600;padding:12px 8px 6px;border-bottom:1px solid var(--line);}
-  td{padding:11px 8px;border-bottom:1px solid #eeece6;vertical-align:middle;font-size:13.5px;}
+  td{padding:11px 8px;border-bottom:1px solid var(--line-soft);vertical-align:middle;font-size:13.5px;}
   tr:last-child td{border-bottom:none;}
   .deliv{width:56%;font-weight:500;} .col-status{width:140px;} .col-date{width:120px;}
-
   .pill{display:inline-block;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
-  .s-notstarted{background:var(--notstarted);} .s-progress{background:var(--progress);}
-  .s-blocked{background:var(--blocked);} .s-complete{background:var(--complete);}
-  .date-val{color:var(--ink-soft);} .date-val.none{color:#bcc0bb;}
+  .s-notstarted{background:var(--notstarted);} .s-progress{background:var(--progress);} .s-complete{background:var(--complete);}
+  .date-val{color:var(--text-soft);} .date-val.none{color:var(--muted);opacity:.6;}
 
-  .timeline .month{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid #eeece6;}
+  .timeline .month{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--line-soft);}
   .timeline .month:last-child{border-bottom:none;}
   .timeline .mlabel{flex:0 0 150px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px;}
   .timeline .mlabel span{display:block;font-weight:400;font-size:11.5px;color:var(--muted);letter-spacing:0;text-transform:none;margin-top:2px;}
-  .timeline ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-soft);}
+  .timeline ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--text-soft);}
   .timeline li{margin-bottom:3px;}
 
-  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
-  button.act{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:7px;padding:9px 16px;
-    font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
-  button.act:hover{opacity:.9;}
-  .updated{font-size:12.5px;color:var(--muted);margin-left:auto;}
-  .updated b{color:var(--ink-soft);}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:6px;}
-  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;}
-
-  .scope-note{font-size:12px;color:var(--muted);background:#f0eee7;border-radius:8px;padding:12px 16px;margin-bottom:22px;}
-  .scope-note b{color:var(--ink-soft);}
+  .scope-note{font-size:12px;color:var(--muted);background:var(--note-bg);border-radius:8px;padding:12px 16px;margin-bottom:22px;}
+  .scope-note b{color:var(--text-soft);}
   footer{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:34px;}
 
+  @media (max-width:680px){.contacts{grid-template-columns:1fr;}}
+
   @media print{
+    :root, html[data-theme="dark"]{
+      --bg:#fff; --paper:#fff; --text:#2e3a3a; --text-soft:#46514f; --muted:#7b817c;
+      --line:#ccc; --line-soft:#e5e5e5; --bar-track:#e8e6df; --note-bg:#f0eee7;
+      --header-bg:#2e3a3a; --header-text:#fff; --header-sub:#c7cec9; --brand:#b9c2bd;
+      --chip-bg:#fff; --chip-text:#2e3a3a; --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
+    }
     body{background:#fff;} .wrap{max-width:none;padding:0;} .toolbar{display:none;}
-    header,section,.overall{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
-    .pill,.bar span,header,.sec-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    header,section{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
+    .pill,.bar span,header,.sec-num,.chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   }
 </style>
 </head>
@@ -84,21 +118,35 @@
 <div class="wrap">
 
   <header>
-    <div>
-      <div class="brand">Guided Growth Marketing</div>
-      <h1>Edlio Engagement Tracker</h1>
-      <div class="sub">Agents launch &amp; website foundation &middot; Prepared for Brian LeTendre</div>
+    <div class="cobrand">
+      <div class="chip" id="chip-ggm"><span class="wm">Guided Growth<small>MARKETING</small></span></div>
+      <span class="amp">×</span>
+      <div class="chip" id="chip-edlio"><span class="wm wm-edlio">edlio</span></div>
     </div>
-    <div class="meta" id="meta"></div>
+    <div class="hrow">
+      <div>
+        <div class="brand">Engagement Tracker</div>
+        <h1>Edlio Agents Launch &amp; Website Foundation</h1>
+        <div class="sub" id="subline"></div>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
   </header>
 
   <div class="toolbar">
     <button class="act" onclick="window.print()">Export / Print to PDF</button>
+    <button class="act ghost" id="themeBtn" onclick="toggleTheme()">Dark mode</button>
     <div class="updated">Last updated: <b id="updated">—</b></div>
   </div>
 
-  <div class="overall">
-    <div class="row"><h2>Overall Progress</h2><div class="pct" id="pct">0%</div></div>
+  <section class="overview">
+    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">✦</span><h3>Engagement Overview</h3></div>
+    <p class="objective" id="objective"></p>
+    <div class="contacts" id="contacts"></div>
+  </section>
+
+  <section class="overall">
+    <div class="toprow"><h2>Overall Progress</h2><div class="pct" id="pct">0%</div></div>
     <div class="bar"><span id="barfill"></span></div>
     <div class="counts" id="counts"></div>
     <div class="legend">
@@ -106,7 +154,7 @@
       <span><span class="dot" style="background:var(--progress)"></span>In progress</span>
       <span><span class="dot" style="background:var(--complete)"></span>Complete</span>
     </div>
-  </div>
+  </section>
 
   <div id="sections"></div>
 
@@ -150,7 +198,15 @@
 <!-- CLIENT DATA: sanitized mirror of tracker-data.json (no internal notes, no overdue context). The scheduled task replaces the contents of this block each run. -->
 <script id="tracker-data" type="application/json">
 {
-  "engagement": { "client": "Edlio", "preparedFor": "Brian LeTendre", "dates": "Jun 15 – Aug 17, 2026", "note": "Fixed 2-month engagement" },
+  "engagement": {
+    "client": "Edlio", "preparedFor": "Brian LeTendre", "dates": "Jun 15 – Aug 17, 2026", "note": "Fixed 2-month engagement",
+    "objective": "Position Edlio's Agents product to be found and convertible ahead of NSPRA in July, and tighten the website foundation so paid, PR, and content compound.",
+    "contacts": [
+      { "name": "Jimmy Montchal", "org": "Guided Growth Marketing", "role": "Owner" },
+      { "name": "Brian LeTendre", "org": "Edlio", "role": "Primary contact" },
+      { "name": "Annie O'Mahony", "org": "Edlio", "role": "Contact" }
+    ]
+  },
   "lastUpdated": "2026-06-16",
   "sections": [
     { "num": "1", "title": "Edlio Agents Product Page", "items": [
@@ -181,15 +237,37 @@
 </script>
 
 <script>
+// Logos: set to a data: URI string to render an image instead of the wordmark.
+const LOGOS = { ggm: null, edlio: null };
 const STATUS_LABEL = { notstarted:"Not started", progress:"In progress", blocked:"In progress", complete:"Complete" };
 const STATUS_CLASS = { notstarted:"notstarted", progress:"progress", blocked:"progress", complete:"complete" };
 const DATA = JSON.parse(document.getElementById('tracker-data').textContent);
 
 function fmt(d){ if(!d) return ""; const dt=new Date(d+"T00:00:00"); return isNaN(dt)?d:dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
 
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+  setTheme(cur);
+  try{ localStorage.setItem('edlio-theme', cur); }catch(e){}
+}
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t==='dark' ? 'Light mode' : 'Dark mode';
+}
+
+function renderLogos(){
+  if(LOGOS.ggm) document.getElementById('chip-ggm').innerHTML = '<img alt="Guided Growth Marketing" src="'+LOGOS.ggm+'">';
+  if(LOGOS.edlio) document.getElementById('chip-edlio').innerHTML = '<img alt="Edlio" src="'+LOGOS.edlio+'">';
+}
+
 function render(){
   const e=DATA.engagement;
-  document.getElementById('meta').innerHTML=`<div class="big">${e.dates}</div><div>${e.note}</div><div>${e.preparedFor?'Prepared for '+e.preparedFor:''}</div>`;
+  document.getElementById('subline').textContent = "Prepared for " + (e.preparedFor||"");
+  document.getElementById('meta').innerHTML = `<div class="big">${e.dates}</div><div>${e.note}</div>`;
+  document.getElementById('objective').textContent = e.objective || "";
+  document.getElementById('contacts').innerHTML = (e.contacts||[]).map(c=>
+    `<div class="contact"><div class="cn">${c.name}</div><div class="cr">${c.role||''}</div><div class="co">${c.org||''}</div></div>`).join('');
+
   const root=document.getElementById('sections'); root.innerHTML="";
   DATA.sections.forEach(sec=>{
     const el=document.createElement('section');
@@ -206,6 +284,7 @@ function render(){
       </table>`;
     root.appendChild(el);
   });
+
   const all=DATA.sections.flatMap(s=>s.items), total=all.length;
   const c=all.filter(i=>i.status==="complete").length;
   const p=all.filter(i=>i.status==="progress"||i.status==="blocked").length;
@@ -216,7 +295,14 @@ function render(){
   document.getElementById('counts').innerHTML=`<b>${c}</b> complete &middot; <b>${p}</b> in progress &middot; <b>${n}</b> upcoming &middot; <b>${total}</b> total deliverables`;
   document.getElementById('updated').textContent=DATA.lastUpdated||"—";
 }
-render();
+
+(function init(){
+  let t="light";
+  try{ t = localStorage.getItem('edlio-theme') || "light"; }catch(e){}
+  setTheme(t);
+  renderLogos();
+  render();
+})();
 </script>
 </body>
 </html>
