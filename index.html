@@ -169,7 +169,7 @@
   </header>
 
   <div class="toolbar">
-    <button class="act" onclick="downloadPDF()">Download PDF</button>
+    <button class="act" onclick="downloadPDF()">Save as PDF</button>
     <button class="act ghost" id="themeBtn" onclick="toggleTheme()">Dark mode</button>
     <div class="updated">Last updated <b id="updated">-</b> &middot; Next update <b id="nextupd">-</b></div>
   </div>
@@ -257,8 +257,6 @@
   <footer>www.guidedgrowthmktg.com</footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <!-- CLIENT DATA: sanitized mirror of tracker-data.json (no internal notes, no overdue context). The scheduled task replaces the contents of this block each run. -->
 <script id="tracker-data" type="application/json">
 {
@@ -328,7 +326,7 @@
         {
           "id": "p1d",
           "label": "AEO-ready FAQ section integrated into page",
-          "status": "notstarted",
+          "status": "progress",
           "target": "2026-06-30",
           "done": ""
         }
@@ -341,7 +339,7 @@
         {
           "id": "p2a",
           "label": "Cookie consent banner live on edlio.com",
-          "status": "notstarted",
+          "status": "progress",
           "target": "2026-06-30",
           "done": ""
         },
@@ -446,6 +444,14 @@
     {
       "date": "2026-06-17",
       "text": "Agents page on-page SEO completed and put in review: search-optimized title and description plus a full H1/H2/H3 heading hierarchy. Deliverable documented."
+    },
+    {
+      "date": "2026-06-17",
+      "text": "Structured data scoped for the Agents page: SoftwareApplication and FAQPage (GEO) schema drafted from page content, ready to add to the page head code."
+    },
+    {
+      "date": "2026-06-17",
+      "text": "Cookie consent banner work kicked off: research started on the banner approach, with a client call set up to confirm direction."
     }
   ]
 }
@@ -469,21 +475,7 @@ function applyGgmLogo(theme){
   const src = theme==='dark' ? LOGOS.ggmLight : LOGOS.ggmDark;
   if(src){ slot.classList.add('ggm-logo'); slot.innerHTML='<img alt="Guided Growth Marketing" src="'+src+'">'; }
 }
-function downloadPDF(){
-  const root=document.documentElement; const prev=root.getAttribute('data-theme');
-  const views=[...document.querySelectorAll('.view')]; const hid=views.map(v=>v.hidden);
-  root.setAttribute('data-theme','light'); document.body.classList.add('printing'); views.forEach(v=>v.hidden=false);
-  const el=document.querySelector('.wrap');
-  const restore=()=>{ document.body.classList.remove('printing'); if(prev) root.setAttribute('data-theme',prev); views.forEach((v,i)=>v.hidden=hid[i]); };
-  if(window.html2pdf){
-    const opt={margin:[8,8,10,8], filename:'Edlio-Engagement-Tracker.pdf',
-      image:{type:'jpeg',quality:0.98},
-      html2canvas:{scale:2,backgroundColor:'#ffffff',useCORS:true,windowWidth:el.scrollWidth},
-      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
-      pagebreak:{mode:['css','legacy'],avoid:['section','.contact','tr']}};
-    html2pdf().set(opt).from(el).save().then(restore).catch(restore);
-  } else { window.print(); restore(); }
-}
+function downloadPDF(){ window.print(); }
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
   setTheme(cur);
