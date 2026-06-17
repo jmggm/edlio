@@ -10,7 +10,6 @@
     --bg:#f5f3ee; --paper:#ffffff; --text:#2e3a3a; --text-soft:#46514f; --muted:#7b817c;
     --line:#dcd9d1; --line-soft:#eeece6; --bar-track:#e8e6df; --note-bg:#f0eee7;
     --header-bg:#2e3a3a; --header-text:#ffffff; --header-sub:#c7cec9; --brand:#b9c2bd;
-    --chip-bg:#ffffff; --chip-text:#2e3a3a;
     --olive:#5c6650; --notstarted:#9aa0a0; --progress:#c9871f; --complete:#4f7d4a;
     --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
   }
@@ -19,7 +18,6 @@
     --bg:#171d1c; --paper:#212a29; --text:#e9edec; --text-soft:#c2c9c7; --muted:#8b9491;
     --line:#33403e; --line-soft:#2b3534; --bar-track:#2b3534; --note-bg:#1b2322;
     --header-bg:#0f1413; --header-text:#f3f6f5; --header-sub:#aab3b0; --brand:#8a958f;
-    --chip-bg:#f3f6f5; --chip-text:#1c2322;
     --olive:#7d8a6e; --notstarted:#6b726f; --progress:#d39a3f; --complete:#5f9a58;
     --sec-num-bg:#3a4543; --sec-border:#445250;
   }
@@ -28,15 +26,14 @@
     color:var(--text);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
   .wrap{max-width:1000px;margin:0 auto;padding:32px 28px 64px;}
 
-  header{background:var(--header-bg);color:var(--header-text);border-radius:10px;padding:24px 32px 28px;margin-bottom:22px;}
-  .cobrand{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
-  .chip{background:var(--chip-bg);color:var(--chip-text);border-radius:8px;padding:9px 14px;display:flex;align-items:center;
-    min-height:40px;box-shadow:0 1px 3px rgba(0,0,0,.18);}
-  .chip img{display:block;max-height:26px;width:auto;}
-  .chip .wm{font-weight:800;letter-spacing:.4px;font-size:14px;}
-  .chip .wm small{display:block;font-weight:600;font-size:8.5px;letter-spacing:2px;color:var(--muted);margin-top:1px;}
-  .chip .wm-edlio{font-size:18px;letter-spacing:0;}
-  .amp{color:var(--header-sub);font-size:16px;opacity:.7;}
+  .cobrand{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:0 4px;color:var(--text);}
+  .cobrand .ggm-wm{font-weight:800;font-size:17px;letter-spacing:.3px;}
+  .cobrand .ggm-logo img{display:block;height:38px;width:auto;}
+  .cobrand .amp{color:var(--muted);font-size:17px;}
+  .cobrand .edlio-logo{display:inline-flex;}
+  .cobrand .edlio-logo svg{height:24px;width:auto;display:block;color:var(--text);}
+
+  header{background:var(--header-bg);color:var(--header-text);border-radius:10px;padding:28px 32px;margin-bottom:22px;}
   .hrow{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
   .brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:10px;}
   header h1{font-size:25px;margin:0 0 6px;letter-spacing:.5px;text-transform:uppercase;font-weight:800;}
@@ -60,7 +57,6 @@
   .sec-head h3{margin:0;font-size:15px;letter-spacing:.6px;text-transform:uppercase;}
   .sec-prog{margin-left:auto;font-size:12px;color:var(--muted);}
 
-  /* Overview */
   .objective{font-size:14.5px;color:var(--text-soft);margin:14px 0 4px;max-width:760px;}
   .contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
   .contact{border:1px solid var(--line);border-radius:9px;padding:12px 14px;}
@@ -106,23 +102,26 @@
       --bg:#fff; --paper:#fff; --text:#2e3a3a; --text-soft:#46514f; --muted:#7b817c;
       --line:#ccc; --line-soft:#e5e5e5; --bar-track:#e8e6df; --note-bg:#f0eee7;
       --header-bg:#2e3a3a; --header-text:#fff; --header-sub:#c7cec9; --brand:#b9c2bd;
-      --chip-bg:#fff; --chip-text:#2e3a3a; --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
+      --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
     }
     body{background:#fff;} .wrap{max-width:none;padding:0;} .toolbar{display:none;}
     header,section{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
-    .pill,.bar span,header,.sec-num,.chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .pill,.bar span,header,.sec-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <div class="cobrand">
+    <span class="ggm-logo" id="ggm-logo"><span class="ggm-wm">Guided Growth Marketing</span></span>
+    <span class="amp">×</span>
+    <span class="edlio-logo" role="img" aria-label="Edlio">
+      <svg viewBox="0 0 76 26" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M54.5759 1.36331L54.5574 1.37073C55.3968 1.90932 55.9577 2.85279 55.9577 3.92626C55.9577 5.60147 54.6018 6.95723 52.9267 6.95723C52.2024 6.95723 51.5375 6.70465 51.0175 6.28121V6.29235C51.0175 6.29235 50.8243 6.14749 50.5978 5.86519C50.4046 5.6349 50.2448 5.37118 50.1259 5.08887C50.0146 4.82515 49.9254 4.52056 49.8883 4.17512C49.736 2.69307 49.8734 1.36701 49.8734 1.36701C49.866 1.22216 50.022 1.1293 50.1446 1.20729L50.7575 1.69018C51.2069 1.06986 52.6221 0.029823 52.6221 0.029823C52.7113 -0.0444654 52.8449 0.029823 52.8301 0.14497L52.8115 0.895285L54.7096 0.609274C54.8582 0.579558 54.9771 0.728136 54.9139 0.865569L54.5759 1.36331ZM51.3964 3.92626C51.3964 4.77315 52.0835 5.4566 52.9267 5.4566C53.7699 5.4566 54.457 4.77315 54.457 3.92626C54.457 3.07937 53.7699 2.39591 52.9267 2.39591C52.0798 2.39591 51.3964 3.08308 51.3964 3.92626ZM29.081 10.4124C28.9213 10.2192 28.7319 10.093 28.5387 9.99638C27.5804 9.55065 26.5589 9.36121 25.4817 9.35007C20.4079 9.35007 16.7714 13.4025 16.7714 18.4429C16.7714 22.0794 18.8775 25.5264 23.1528 25.5264C25.608 25.5264 27.7772 23.8661 28.8619 21.5371C28.8619 21.5074 28.8916 21.4739 28.925 21.4739C28.9585 21.4739 28.9585 21.5074 28.9585 21.5705C28.925 21.7934 28.925 22.0497 28.925 22.2725V22.2725C28.925 24.0927 30.0096 25.4001 31.8594 25.4001C33.297 25.4001 34.6341 24.8244 35.4327 24.1224C35.559 23.9961 35.6556 23.8661 35.6556 23.6766C35.6556 23.5169 35.559 23.4241 35.3993 23.3906C35.284 23.3522 35.1564 23.3495 34.9805 23.3458C34.8672 23.3434 34.7339 23.3406 34.5709 23.3275C33.3898 23.1046 33.0071 22.02 33.0071 20.4265L33.6126 2.4338C33.3563 2.14779 32.9106 1.98807 32.528 1.98807C31.956 1.98807 31.5399 2.24437 31.0943 2.53039C30.1062 3.13955 28.5758 3.80815 27.3316 4.03101C26.8821 4.09416 26.6927 4.38388 26.6927 4.66989C26.6927 4.89276 26.7558 5.08591 26.8821 5.2122C28.1561 5.2122 29.2742 5.56135 29.2742 6.9654L29.1776 9.55065C29.1776 9.9022 29.2116 10.1678 29.2297 10.3092C29.2363 10.3606 29.2408 10.3956 29.2408 10.4124C29.2408 10.4755 29.2408 10.509 29.2073 10.509C29.1777 10.509 29.1446 10.4759 29.082 10.4134L29.081 10.4124ZM25.0286 22.5363C22.4471 22.5363 20.627 19.9511 20.627 16.7306C20.627 13.5696 22.3171 11.3707 25.2217 11.3707C26.5923 11.3707 27.9964 11.9762 28.8582 12.9976C29.0142 13.1574 29.0476 13.2837 29.0476 13.5065L28.8878 17.4326C28.7913 20.4636 27.4541 22.5363 25.0286 22.5363ZM12.3687 15.4678C13.5127 14.9366 13.7913 13.826 13.6502 12.9121C13.2713 10.4866 10.7046 8.7223 7.3022 9.25346C2.35087 10.0261 -0.624382 14.7546 0.111074 19.4495C0.746241 23.5168 4.08551 26.0947 8.31252 25.4633C11.4326 24.9767 14.2482 22.7294 15.0133 19.5759C15.032 19.4756 15.0171 19.3827 15.0059 19.3195C14.9651 19.067 14.72 18.9444 14.5008 18.9778C14.3447 19.0039 14.1999 19.1227 14.1256 19.2639C13.0744 20.7867 11.4736 21.7117 9.7723 21.9791C7.69222 22.3023 5.78672 21.6634 4.46439 20.0291C4.12637 19.535 3.81435 18.9704 3.6212 18.3538C3.60264 18.2276 3.65463 18.1533 3.78092 18.1346C5.70129 17.8338 10.5635 16.4966 12.3687 15.4678ZM3.02318 16.8012C2.97118 16.4854 2.91918 15.9469 2.93404 15.62C3.02318 13.6996 4.02237 12.0281 6.0393 11.7124C8.24566 11.367 9.73887 13.2651 9.90973 14.3682C9.99145 14.9031 4.7244 16.7269 3.30548 16.9497C3.14576 16.9758 3.04176 16.9275 3.02318 16.8012ZM44.0991 21.2288C44.0991 22.5697 44.2588 23.9106 45.8857 24.1335C46.1421 24.1669 46.3315 24.3898 46.3315 24.6424C46.3315 24.9952 46.1087 25.1846 45.7892 25.1846H37.8775C37.6547 25.1846 37.4317 25.0249 37.3983 24.7055C37.3983 24.386 37.5878 24.2263 37.844 24.1298C39.6641 23.6841 39.9167 22.1835 39.9502 20.6828L40.3959 6.9654C40.3959 5.7545 39.5973 5.2122 38.0335 5.2122C37.9072 5.11563 37.8106 4.89276 37.8106 4.66989C37.8106 4.38388 38.0037 4.09416 38.4792 4.03101C39.6901 3.80815 41.1908 3.13955 42.1491 2.53039L42.1896 2.50618C42.6518 2.23007 43.0568 1.98807 43.6163 1.98807C43.9988 1.98807 44.4446 2.14779 44.7009 2.4338L44.0991 21.2288ZM48.8521 12.5185C50.4456 12.5185 51.2108 13.0311 51.2108 14.2421L50.9879 20.6494C50.9248 22.4992 50.6722 23.7435 48.8521 24.1261C48.5959 24.193 48.4361 24.3824 48.4361 24.7019C48.4361 25.0213 48.659 25.181 48.8818 25.181H56.827C57.0796 25.181 57.3359 24.9916 57.3359 24.6386C57.3359 24.3527 57.1762 24.1633 56.9199 24.1299C55.2596 23.8104 55.1332 22.5363 55.1332 21.1954L55.5158 9.74385C55.293 9.4244 54.8472 9.29811 54.4311 9.29811C53.9743 9.29811 53.6096 9.50115 53.2195 9.71838C53.1466 9.75898 53.0728 9.80007 52.9974 9.84042C52.0094 10.4793 50.5422 11.1145 49.2978 11.3077C48.8187 11.3708 48.6292 11.6902 48.6292 12.0096C48.6292 12.1991 48.7258 12.4219 48.8521 12.5185ZM76 16.6006C76 20.9391 72.969 25.5338 67.0371 25.5338C61.9 25.5338 59.6342 22.1202 59.6342 18.3872C59.6342 14.0488 62.7914 9.35749 68.5971 9.35749C73.6413 9.36121 76 12.8676 76 16.6006ZM63.3338 16.2181C63.3338 19.4384 65.4696 23.2383 68.7271 23.2383C71.1823 23.2383 72.267 21.2288 72.267 18.963C72.267 15.7092 70.224 11.6568 66.9071 11.6568C64.4183 11.6568 63.3338 13.8259 63.3338 16.2181Z" fill="currentColor"></path></svg>
+    </span>
+  </div>
+
   <header>
-    <div class="cobrand">
-      <div class="chip" id="chip-ggm"><span class="wm">Guided Growth<small>MARKETING</small></span></div>
-      <span class="amp">×</span>
-      <div class="chip" id="chip-edlio"><span class="wm wm-edlio">edlio</span></div>
-    </div>
     <div class="hrow">
       <div>
         <div class="brand">Engagement Tracker</div>
@@ -237,14 +236,19 @@
 </script>
 
 <script>
-// Logos: set to a data: URI string to render an image instead of the wordmark.
-const LOGOS = { ggm: null, edlio: null };
+// GGM logo: set ggmLight (for dark backgrounds) and ggmDark (for light backgrounds) to data: URIs to swap in the real mark.
+const LOGOS = { ggmLight: null, ggmDark: null };
 const STATUS_LABEL = { notstarted:"Not started", progress:"In progress", blocked:"In progress", complete:"Complete" };
 const STATUS_CLASS = { notstarted:"notstarted", progress:"progress", blocked:"progress", complete:"complete" };
 const DATA = JSON.parse(document.getElementById('tracker-data').textContent);
 
 function fmt(d){ if(!d) return ""; const dt=new Date(d+"T00:00:00"); return isNaN(dt)?d:dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
 
+function applyGgmLogo(theme){
+  const slot=document.getElementById('ggm-logo');
+  const src = theme==='dark' ? LOGOS.ggmLight : LOGOS.ggmDark;
+  if(src){ slot.classList.add('ggm-logo'); slot.innerHTML='<img alt="Guided Growth Marketing" src="'+src+'">'; }
+}
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
   setTheme(cur);
@@ -253,11 +257,7 @@ function toggleTheme(){
 function setTheme(t){
   document.documentElement.setAttribute('data-theme', t);
   document.getElementById('themeBtn').textContent = t==='dark' ? 'Light mode' : 'Dark mode';
-}
-
-function renderLogos(){
-  if(LOGOS.ggm) document.getElementById('chip-ggm').innerHTML = '<img alt="Guided Growth Marketing" src="'+LOGOS.ggm+'">';
-  if(LOGOS.edlio) document.getElementById('chip-edlio').innerHTML = '<img alt="Edlio" src="'+LOGOS.edlio+'">';
+  applyGgmLogo(t);
 }
 
 function render(){
@@ -300,7 +300,6 @@ function render(){
   let t="light";
   try{ t = localStorage.getItem('edlio-theme') || "light"; }catch(e){}
   setTheme(t);
-  renderLogos();
   render();
 })();
 </script>
