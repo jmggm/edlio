@@ -358,7 +358,7 @@ function render(){
   document.getElementById('barfill').style.width=pct+"%";
   document.getElementById('counts').innerHTML=`<b>${c}</b> complete &middot; <b>${p}</b> in progress &middot; <b>${n}</b> upcoming &middot; <b>${total}</b> total deliverables`;
   document.getElementById('hmeta').innerHTML=`<div class="mitem"><span class="ml">Timeline</span><span class="mv">${e.dates}</span></div><div class="mitem"><span class="ml">Engagement</span><span class="mv">${e.note}</span></div><div class="mitem"><span class="ml">Progress</span><span class="mv">${pct}% complete</span></div>`;
-  document.getElementById('updated').textContent=DATA.lastUpdated||"-";
+  const _lu=DATA.lastUpdated?new Date(DATA.lastUpdated+'T00:00:00'):null; document.getElementById('updated').textContent=_lu?_lu.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):"-";
   const _ns=nextSync(); document.getElementById('nextupd').textContent=_ns?_ns.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):"-";
   renderBadge(pct); renderFeed();
 }
