@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edlio Engagement Tracker — Guided Growth Marketing</title>
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#2e3a3a; --ink-soft:#46514f; --olive:#5c6650; --cream:#f5f3ee;
+    --line:#dcd9d1; --paper:#ffffff; --muted:#7b817c;
+    --notstarted:#9aa0a0; --progress:#c9871f; --blocked:#b4472e; --complete:#4f7d4a;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--cream);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 28px 64px;}
+
+  header{background:var(--ink);color:#fff;border-radius:10px;padding:30px 34px;margin-bottom:24px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  .brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b9c2bd;margin-bottom:14px;}
+  header h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px;text-transform:uppercase;font-weight:800;}
+  header .sub{color:#c7cec9;font-size:14px;}
+  .meta{text-align:right;font-size:13px;color:#c7cec9;min-width:190px;}
+  .meta .big{font-size:22px;color:#fff;font-weight:700;}
+  .meta div{margin-bottom:3px;}
+
+  .overall{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:26px;}
+  .overall .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+  .overall h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin:0;color:var(--ink-soft);}
+  .overall .pct{font-size:30px;font-weight:800;color:var(--ink);}
+  .bar{height:14px;background:#e8e6df;border-radius:8px;overflow:hidden;}
+  .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--complete));border-radius:8px;transition:width .3s ease;}
+  .counts{font-size:12.5px;color:var(--muted);margin-top:10px;}
+  .counts b{color:var(--ink);}
+
+  section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 24px 18px;margin-bottom:22px;}
+  .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--ink);margin-bottom:6px;}
+  .sec-num{background:var(--ink);color:#fff;font-weight:700;font-size:13px;width:26px;height:26px;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .sec-head h3{margin:0;font-size:15px;letter-spacing:.6px;text-transform:uppercase;}
+  .sec-prog{margin-left:auto;font-size:12px;color:var(--muted);}
+
+  table{width:100%;border-collapse:collapse;}
+  th{text-align:left;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+    font-weight:600;padding:12px 8px 6px;border-bottom:1px solid var(--line);}
+  td{padding:11px 8px;border-bottom:1px solid #eeece6;vertical-align:middle;font-size:13.5px;}
+  tr:last-child td{border-bottom:none;}
+  .deliv{width:56%;font-weight:500;} .col-status{width:140px;} .col-date{width:120px;}
+
+  .pill{display:inline-block;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
+  .s-notstarted{background:var(--notstarted);} .s-progress{background:var(--progress);}
+  .s-blocked{background:var(--blocked);} .s-complete{background:var(--complete);}
+  .date-val{color:var(--ink-soft);} .date-val.none{color:#bcc0bb;}
+
+  .timeline .month{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid #eeece6;}
+  .timeline .month:last-child{border-bottom:none;}
+  .timeline .mlabel{flex:0 0 150px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px;}
+  .timeline .mlabel span{display:block;font-weight:400;font-size:11.5px;color:var(--muted);letter-spacing:0;text-transform:none;margin-top:2px;}
+  .timeline ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-soft);}
+  .timeline li{margin-bottom:3px;}
+
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+  button.act{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:7px;padding:9px 16px;
+    font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.act:hover{opacity:.9;}
+  .updated{font-size:12.5px;color:var(--muted);margin-left:auto;}
+  .updated b{color:var(--ink-soft);}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:6px;}
+  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+
+  .scope-note{font-size:12px;color:var(--muted);background:#f0eee7;border-radius:8px;padding:12px 16px;margin-bottom:22px;}
+  .scope-note b{color:var(--ink-soft);}
+  footer{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:34px;}
+
+  @media print{
+    body{background:#fff;} .wrap{max-width:none;padding:0;} .toolbar{display:none;}
+    header,section,.overall{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
+    .pill,.bar span,header,.sec-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="brand">Guided Growth Marketing</div>
+      <h1>Edlio Engagement Tracker</h1>
+      <div class="sub">Agents launch &amp; website foundation &middot; Prepared for Brian LeTendre</div>
+    </div>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="toolbar">
+    <button class="act" onclick="window.print()">Export / Print to PDF</button>
+    <div class="updated">Last updated: <b id="updated">—</b></div>
+  </div>
+
+  <div class="overall">
+    <div class="row"><h2>Overall Progress</h2><div class="pct" id="pct">0%</div></div>
+    <div class="bar"><span id="barfill"></span></div>
+    <div class="counts" id="counts"></div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--notstarted)"></span>Not started</span>
+      <span><span class="dot" style="background:var(--progress)"></span>In progress</span>
+      <span><span class="dot" style="background:var(--complete)"></span>Complete</span>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+  <section class="timeline">
+    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">★</span><h3>Milestone Timeline</h3></div>
+    <div class="month">
+      <div class="mlabel">June<span>Foundation</span></div>
+      <ul>
+        <li>Kickoff with Brian and Annie</li>
+        <li>Edlio Agents product page built and published</li>
+        <li>Cookie consent banner implemented</li>
+        <li>Google Consent Mode v2 configured and tested</li>
+      </ul>
+    </div>
+    <div class="month">
+      <div class="mlabel">July<span>NSPRA launch &amp; run</span></div>
+      <ul>
+        <li>NSPRA support, final Agents page tuning, demo asset coordination</li>
+        <li>Existing website page updates underway</li>
+        <li>SEO and AEO FAQ refresh on priority pages</li>
+      </ul>
+    </div>
+    <div class="month">
+      <div class="mlabel">August<span>Refine &amp; systemize</span></div>
+      <ul>
+        <li>Complete remaining website page updates</li>
+        <li>Portfolio pages and logo carousel refreshed</li>
+        <li>Final SEO review across priority pages</li>
+        <li>Handoff documentation and end-of-engagement summary</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="scope-note">
+    <b>Not included:</b> HubSpot optimization (future project) &middot; Paid media spend &middot; Full website redesign or new development &middot; Video / advanced creative production.
+  </div>
+
+  <footer>www.guidedgrowthmktg.com</footer>
+</div>
+
+<!-- CLIENT DATA: sanitized mirror of tracker-data.json (no internal notes, no overdue context). The scheduled task replaces the contents of this block each run. -->
+<script id="tracker-data" type="application/json">
+{
+  "engagement": { "client": "Edlio", "preparedFor": "Brian LeTendre", "value": "$10,000", "cadence": "$5,000 / month · Net 30", "dates": "Jun 15 – Aug 17, 2026", "note": "Fixed 2-month engagement" },
+  "lastUpdated": "2026-06-16",
+  "sections": [
+    { "num": "1", "title": "Edlio Agents Product Page", "items": [
+      { "id": "p1a", "label": "New product page live at edlio.com/agents", "status": "notstarted", "target": "2026-06-30", "done": "" },
+      { "id": "p1b", "label": "Copy & layout aligned with Edlio brand and Core Narrative", "status": "notstarted", "target": "2026-06-27", "done": "" },
+      { "id": "p1c", "label": "SEO-optimized structure (meta title, description, header hierarchy)", "status": "notstarted", "target": "2026-06-30", "done": "" },
+      { "id": "p1d", "label": "AEO-ready FAQ section integrated into page", "status": "notstarted", "target": "2026-06-30", "done": "" }
+    ]},
+    { "num": "2", "title": "Cookie Consent Banner", "items": [
+      { "id": "p2a", "label": "Cookie consent banner live on edlio.com", "status": "notstarted", "target": "2026-06-30", "done": "" },
+      { "id": "p2b", "label": "Google Analytics reconfigured for consent controls", "status": "notstarted", "target": "2026-06-30", "done": "" },
+      { "id": "p2c", "label": "Google Consent Mode v2 implemented (restore GA data for consenting users)", "status": "notstarted", "target": "2026-06-30", "done": "" },
+      { "id": "p2d", "label": "Documentation on banner config & GA consent settings", "status": "notstarted", "target": "2026-07-03", "done": "" }
+    ]},
+    { "num": "3", "title": "Existing Website Page Updates", "items": [
+      { "id": "p3a", "label": "Refresh edlio.com pages with updated messaging & new marketing content", "status": "notstarted", "target": "2026-07-31", "done": "" },
+      { "id": "p3b", "label": "New product screenshots & imagery integrated across pages", "status": "notstarted", "target": "2026-07-31", "done": "" },
+      { "id": "p3c", "label": "Portfolio pages & logo carousel updated to current client roster", "status": "notstarted", "target": "2026-08-15", "done": "" },
+      { "id": "p3d", "label": "SEO improvements & FAQ sections added to priority pages", "status": "notstarted", "target": "2026-08-08", "done": "" }
+    ]},
+    { "num": "R", "title": "Reporting", "items": [
+      { "id": "r1", "label": "Monthly performance report — Month 1 (organic visibility, site health, key pages)", "status": "notstarted", "target": "2026-07-15", "done": "" },
+      { "id": "r2", "label": "Monthly performance report — Month 2 + recommendations", "status": "notstarted", "target": "2026-08-17", "done": "" },
+      { "id": "r3", "label": "End-of-engagement summary & handoff documentation", "status": "notstarted", "target": "2026-08-17", "done": "" }
+    ]}
+  ]
+}
+</script>
+
+<script>
+const STATUS_LABEL = { notstarted:"Not started", progress:"In progress", blocked:"In progress", complete:"Complete" };
+const STATUS_CLASS = { notstarted:"notstarted", progress:"progress", blocked:"progress", complete:"complete" };
+const DATA = JSON.parse(document.getElementById('tracker-data').textContent);
+
+function fmt(d){ if(!d) return ""; const dt=new Date(d+"T00:00:00"); return isNaN(dt)?d:dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+
+function render(){
+  const e=DATA.engagement;
+  document.getElementById('meta').innerHTML=`<div class="big">${e.value}</div><div>${e.cadence}</div><div>${e.dates}</div><div>${e.note}</div>`;
+  const root=document.getElementById('sections'); root.innerHTML="";
+  DATA.sections.forEach(sec=>{
+    const el=document.createElement('section');
+    el.innerHTML=`
+      <div class="sec-head"><span class="sec-num">${sec.num}</span><h3>${sec.title}</h3>
+        <span class="sec-prog">${sec.items.filter(i=>i.status==="complete").length}/${sec.items.length} complete</span></div>
+      <table>
+        <thead><tr><th class="deliv">Deliverable</th><th class="col-status">Status</th><th class="col-date">Target</th><th class="col-date">Completed</th></tr></thead>
+        <tbody>${sec.items.map(it=>`<tr>
+          <td class="deliv">${it.label}</td>
+          <td><span class="pill s-${STATUS_CLASS[it.status]}">${STATUS_LABEL[it.status]}</span></td>
+          <td><span class="date-val ${it.target?'':'none'}">${it.target?fmt(it.target):'—'}</span></td>
+          <td><span class="date-val ${it.done?'':'none'}">${it.done?fmt(it.done):'—'}</span></td></tr>`).join('')}</tbody>
+      </table>`;
+    root.appendChild(el);
+  });
+  const all=DATA.sections.flatMap(s=>s.items), total=all.length;
+  const c=all.filter(i=>i.status==="complete").length;
+  const p=all.filter(i=>i.status==="progress"||i.status==="blocked").length;
+  const n=all.filter(i=>i.status==="notstarted").length;
+  const pct=Math.round((c/total)*100);
+  document.getElementById('pct').textContent=pct+"%";
+  document.getElementById('barfill').style.width=pct+"%";
+  document.getElementById('counts').innerHTML=`<b>${c}</b> complete &middot; <b>${p}</b> in progress &middot; <b>${n}</b> upcoming &middot; <b>${total}</b> total deliverables`;
+  document.getElementById('updated').textContent=DATA.lastUpdated||"—";
+}
+render();
+</script>
+</body>
+</html>
