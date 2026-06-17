@@ -313,13 +313,9 @@ function setTheme(t){
 
 function renderBadge(pct){
   const b=document.getElementById('trackbadge'); if(!b) return;
-  const start=new Date('2026-06-15T00:00:00'), end=new Date('2026-08-17T00:00:00'), t=new Date(); t.setHours(0,0,0,0);
-  let frac=(t-start)/(end-start); frac=Math.max(0,Math.min(1,frac)); const expected=frac*100;
-  let cls,txt;
-  if(pct>=100){cls='tb-done';txt='All deliverables complete';}
-  else if(pct>=expected*0.7){cls='tb-green';txt='On track';}
-  else {cls='tb-amber';txt='In progress';}
-  b.className='trackbadge '+cls; b.innerHTML='<span class="tb-dot"></span>'+txt;
+  const done=pct>=100;
+  b.className='trackbadge '+(done?'tb-done':'tb-green');
+  b.innerHTML='<span class="tb-dot"></span>'+(done?'All deliverables complete':'On track');
 }
 function renderFeed(){
   const log=(DATA.log||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6);
