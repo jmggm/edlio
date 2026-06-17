@@ -136,6 +136,13 @@
   .nspra{display:flex;align-items:center;gap:14px;background:var(--note-bg);border:1px solid var(--line);border-left:4px solid var(--edlio);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
   .nspra .nlabel{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--edlio);font-weight:700;margin-bottom:3px;}
   .nspra .ntext{font-size:13.5px;color:var(--text-soft);} .nspra .ntext b{color:var(--text);}
+  .tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--line);}
+  .tab{border:none;background:none;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--muted);padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .tab:hover{color:var(--text-soft);}
+  .tab.active{color:var(--text);border-bottom-color:var(--edlio);}
+  .view[hidden]{display:none;}
+  body.printing .tabs{display:none;}
+  @media print{ .tabs{display:none;} .view[hidden]{display:block !important;} }
 </style>
 </head>
 <body>
@@ -167,12 +174,6 @@
     <div class="updated">Last updated <b id="updated">-</b> &middot; Next update <b id="nextupd">-</b></div>
   </div>
 
-  <section class="overview">
-    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">✦</span><h3>Engagement Overview</h3></div>
-    <p class="objective" id="objective"></p>
-    <div class="contacts" id="contacts"></div>
-  </section>
-
   <section class="overall">
     <div class="toprow"><h2>Overall Progress</h2><div class="pct" id="pct">0%</div></div>
     <div class="bar"><span id="barfill"></span></div>
@@ -184,13 +185,22 @@
     </div>
   </section>
 
-  <section class="feed" id="feed" style="display:none">
-    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">&#8635;</span><h3>Recent Updates</h3></div>
-    <div id="feed-list"></div>
-  </section>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-view="deliverables" onclick="showView('deliverables')">Deliverables</button>
+    <button class="tab" data-view="overview" onclick="showView('overview')">Overview</button>
+    <button class="tab" data-view="activity" onclick="showView('activity')">Activity</button>
+  </div>
 
+  <div id="view-deliverables" class="view">
   <div id="sections"></div>
+  </div>
 
+  <div id="view-overview" class="view" hidden>
+  <section class="overview">
+    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">✦</span><h3>Engagement Overview</h3></div>
+    <p class="objective" id="objective"></p>
+    <div class="contacts" id="contacts"></div>
+  </section>
   <section class="timeline">
     <div class="sec-head"><span class="sec-num" style="background:var(--olive)">★</span><h3>Milestone Timeline</h3></div>
     <div class="month">
@@ -220,10 +230,29 @@
       </ul>
     </div>
   </section>
-
   <div class="scope-note">
     <b>Not included:</b> HubSpot optimization (future project) &middot; Paid media spend &middot; Full website redesign or new development &middot; Video / advanced creative production.
   </div>
+  </div>
+
+  <div id="view-activity" class="view" hidden>
+  <section class="feed" id="feed">
+    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">&#8635;</span><h3>Recent Updates</h3></div>
+    <div id="feed-list"></div>
+  </section>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
   <footer>www.guidedgrowthmktg.com</footer>
 </div>
@@ -288,9 +317,10 @@ function applyGgmLogo(theme){
 }
 function downloadPDF(){
   const root=document.documentElement; const prev=root.getAttribute('data-theme');
-  root.setAttribute('data-theme','light'); document.body.classList.add('printing');
+  const views=[...document.querySelectorAll('.view')]; const hid=views.map(v=>v.hidden);
+  root.setAttribute('data-theme','light'); document.body.classList.add('printing'); views.forEach(v=>v.hidden=false);
   const el=document.querySelector('.wrap');
-  const restore=()=>{ document.body.classList.remove('printing'); if(prev) root.setAttribute('data-theme',prev); };
+  const restore=()=>{ document.body.classList.remove('printing'); if(prev) root.setAttribute('data-theme',prev); views.forEach((v,i)=>v.hidden=hid[i]); };
   if(window.html2pdf){
     const opt={margin:[8,8,10,8], filename:'Edlio-Engagement-Tracker.pdf',
       image:{type:'jpeg',quality:0.98},
@@ -317,11 +347,16 @@ function renderBadge(pct){
   b.className='trackbadge '+(done?'tb-done':'tb-green');
   b.innerHTML='<span class="tb-dot"></span>'+(done?'All deliverables complete':'On track');
 }
+function showView(v){
+  document.querySelectorAll('.view').forEach(el=>{ el.hidden = (el.id!=='view-'+v); });
+  document.querySelectorAll('.tab').forEach(b=>{ b.classList.toggle('active', b.dataset.view===v); });
+}
 function renderFeed(){
-  const log=(DATA.log||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6);
-  const sec=document.getElementById('feed'), list=document.getElementById('feed-list');
-  if(!log.length){ sec.style.display='none'; return; }
-  sec.style.display=''; list.innerHTML=log.map(e=>`<div class="fitem"><span class="fdate">${fmt(e.date)}</span><span class="ftext">${e.text||''}</span></div>`).join('');
+  const log=(DATA.log||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,8);
+  const list=document.getElementById('feed-list');
+  list.innerHTML = log.length
+    ? log.map(e=>`<div class="fitem"><span class="fdate">${fmt(e.date)}</span><span class="ftext">${e.text||''}</span></div>`).join('')
+    : '<div class="fitem"><span class="ftext" style="color:var(--muted)">No updates yet. This feed fills in as work ships.</span></div>';
 }
 function nextSync(){ const d=new Date(); d.setHours(0,0,0,0); for(let i=1;i<=7;i++){ const x=new Date(d); x.setDate(d.getDate()+i); const w=x.getDay(); if(w===1||w===5) return x; } return null; }
 function render(){
