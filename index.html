@@ -10,7 +10,7 @@
     --bg:#f5f3ee; --paper:#ffffff; --text:#2e3a3a; --text-soft:#46514f; --muted:#7b817c;
     --line:#dcd9d1; --line-soft:#eeece6; --bar-track:#e8e6df; --note-bg:#f0eee7;
     --header-bg:#2e3a3a; --header-text:#ffffff; --header-sub:#c7cec9; --brand:#b9c2bd;
-    --olive:#5c6650; --notstarted:#9aa0a0; --progress:#c9871f; --complete:#4f7d4a; --edlio:#16606e;
+    --olive:#5c6650; --notstarted:#9aa0a0; --progress:#c9871f; --complete:#4f7d4a; --edlio:#d12923;
     --sec-num-bg:#2e3a3a; --sec-border:#2e3a3a;
   }
   html[data-theme="dark"]{
@@ -18,7 +18,7 @@
     --bg:#171d1c; --paper:#212a29; --text:#e9edec; --text-soft:#c2c9c7; --muted:#8b9491;
     --line:#33403e; --line-soft:#2b3534; --bar-track:#2b3534; --note-bg:#1b2322;
     --header-bg:#0f1413; --header-text:#f3f6f5; --header-sub:#aab3b0; --brand:#8a958f;
-    --olive:#7d8a6e; --notstarted:#6b726f; --progress:#d39a3f; --complete:#5f9a58; --edlio:#5cb6c6;
+    --olive:#7d8a6e; --notstarted:#6b726f; --progress:#d39a3f; --complete:#5f9a58; --edlio:#d12923;
     --sec-num-bg:#3a4543; --sec-border:#445250;
   }
   *{box-sizing:border-box;}
@@ -49,6 +49,7 @@
   button.act:hover{opacity:.9;}
   .updated{font-size:12.5px;color:var(--muted);margin-left:auto;}
   .updated b{color:var(--text-soft);}
+  body.printing .toolbar{display:none;}
 
   section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 24px 18px;margin-bottom:22px;}
   .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--sec-border);margin-bottom:6px;}
@@ -133,7 +134,7 @@
   </header>
 
   <div class="toolbar">
-    <button class="act" onclick="window.print()">Export / Print to PDF</button>
+    <button class="act" onclick="downloadPDF()">Download PDF</button>
     <button class="act ghost" id="themeBtn" onclick="toggleTheme()">Dark mode</button>
     <div class="updated">Last updated: <b id="updated">—</b></div>
   </div>
@@ -194,6 +195,8 @@
   <footer>www.guidedgrowthmktg.com</footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <!-- CLIENT DATA: sanitized mirror of tracker-data.json (no internal notes, no overdue context). The scheduled task replaces the contents of this block each run. -->
 <script id="tracker-data" type="application/json">
 {
@@ -248,6 +251,20 @@ function applyGgmLogo(theme){
   const slot=document.getElementById('ggm-logo');
   const src = theme==='dark' ? LOGOS.ggmLight : LOGOS.ggmDark;
   if(src){ slot.classList.add('ggm-logo'); slot.innerHTML='<img alt="Guided Growth Marketing" src="'+src+'">'; }
+}
+function downloadPDF(){
+  const root=document.documentElement; const prev=root.getAttribute('data-theme');
+  root.setAttribute('data-theme','light'); document.body.classList.add('printing');
+  const el=document.querySelector('.wrap');
+  const restore=()=>{ document.body.classList.remove('printing'); if(prev) root.setAttribute('data-theme',prev); };
+  if(window.html2pdf){
+    const opt={margin:[8,8,10,8], filename:'Edlio-Engagement-Tracker.pdf',
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:2,backgroundColor:'#ffffff',useCORS:true,windowWidth:el.scrollWidth},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+      pagebreak:{mode:['css','legacy'],avoid:['section','.contact','tr']}};
+    html2pdf().set(opt).from(el).save().then(restore).catch(restore);
+  } else { window.print(); restore(); }
 }
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
