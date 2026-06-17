@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edlio Engagement Tracker - Guided Growth Marketing</title>
+<title>Edlio Engagement Tracker | Guided Growth Marketing</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEUUlEQVR4nO1b3U9TZxx+2hqqGXAaxMTxWT92ZT9QpyCNMI0avUBjdMm48Q8wMZlk4kdcdjM0meKF7Ha7YMncJiZoFIOIYqK1KNGOYiJ0RnGhWJFKQ9cv0nYX5izQ93xiym+057njPb/3fT7O7305PWl1UAFbbW1KTT0VBp1OndJa2cLFYloMcmHopS4udvOAvAfBdLLBuBCEuoHpgGw1Dwh708sVZBvSPUqeAbmA/wLIhbvPY7ZXffpAroD3rG0BagHU0OVi+89GzneAFgC1AGpoAVALoIYWALUAaixRO2GV2YwNdhtsFgvMlZUoLChAYWEhlhgMiESiCEfCeOP34++xMbx8NYrBoSEMe71IJBLzFplJTsUPQnUOB746eAB2q1W1gUgkgv6BAfT23YPT5UI0FlM0byE4ZQPgOA6nm4+htrqaufbE7UbXrR4MDg1hMhBAMpmEiePw2Zo12FZfh13bt8NgMMyZ83P7L/ipvV1S/EJySm6B8rIy/Nh6HsXLl88ZTyQSOHu+FTd7epg5bycm8HZiAg9cLvzecQXnWr7HiuJiScOUnKKHoInj0HqmhRECAK0X2wSFpMP74gW+Pn4C8XhckRgKTtEATh37BqUlJcz485ERXOvqUrQ4ALwaHcWlyx2Kaik4BQOwWSxw1NQITrhy9SpSKXUfIDs6O5FMJiVrKDgBkQAONTYKFidTKTxw9asSAgCB9+/hefZMsoaCExA4BI1GIzaurxIs9vv9CAaDqsUAwOGjTaLXKDh5MB1gt1qQl5cnWDz6+vW8hMiBgpMHE0BZSalo8btAICMiKDh5MAGYTJxocTQazYgICk4ezBmQ/0m+aLGS/61NR47gwL69kjXftZzB7bt3STl5MB0Q+ickuojYPv1YUHDyYAKYmhI/cZcajbILXmhrg2PHTjh27ETn9euKRFBw8mACGPP5RIuLiopULa4UFJw8mADcHo/ovqsoK8+ICApOHkwAsVgMT9xuweKST1ciP1/8wJovKDh5CD4Kt1/6TbhYr0fNpk0ZEULBCYgE8KfHA2e/8PP3/oaGjAih4AQkPg63/HAOvvFxZrzKZsUXW7dmRAwFp2gAU8Egmk6ewrvJSebatyeOY/PnGyUXLi8txXq7XZUYCk7Zd4ImjsPp5mZsqd7MXOvt60P37V4Me72YCgaxbNlSrF21Gtvq69GwZzfzEDPm8+HXPy7jRnc3ZmZm/hecit4K63Q61DkcaPzyIKzr1smVz0E8HsfDR4/Rc+cO7t2/r+glxUJyqv5+wGqzGRuqqmC3WlBZUfHhHX1BAfQGA0KhEKanp+EbH8ew9y88HxnBwNOnCIfDqgwsJKf2BQlqAdTQAqAWQA0tAGoB1NACoBZADS0ANT8wyjYMOp06rQOoBVBDD6j7nV22gPesTx/IBcz2qm2B2X/kQheke2Q6IJtDEPImaTZbXpZI3VTJMyAbukHOgyqDi6Uj1Ny4fwGRiVoyY+qLogAAAABJRU5ErkJggg==">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Edlio Engagement Tracker">
@@ -191,14 +191,6 @@
 
   <div id="sections"></div>
 
-  <!-- NSPRA callout (delete this block to remove) -->
-  <div class="nspra">
-    <div>
-      <div class="nlabel">July Deadline</div>
-      <div class="ntext"><b>NSPRA National Seminar:</b> July 19-22, 2026, New Orleans. Agents page and demo assets land before this.</div>
-    </div>
-  </div>
-
   <section class="timeline">
     <div class="sec-head"><span class="sec-num" style="background:var(--olive)">★</span><h3>Milestone Timeline</h3></div>
     <div class="month">
@@ -325,8 +317,8 @@ function renderBadge(pct){
   let frac=(t-start)/(end-start); frac=Math.max(0,Math.min(1,frac)); const expected=frac*100;
   let cls,txt;
   if(pct>=100){cls='tb-done';txt='All deliverables complete';}
-  else if(pct>=expected*0.7){cls='tb-green';txt='On track for NSPRA \u00b7 Jul 19';}
-  else {cls='tb-amber';txt='Actively in progress \u00b7 NSPRA Jul 19';}
+  else if(pct>=expected*0.7){cls='tb-green';txt='On track';}
+  else {cls='tb-amber';txt='In progress';}
   b.className='trackbadge '+cls; b.innerHTML='<span class="tb-dot"></span>'+txt;
 }
 function renderFeed(){
