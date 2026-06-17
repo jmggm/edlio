@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edlio Engagement Tracker — Guided Growth Marketing</title>
+<title>Edlio Engagement Tracker - Guided Growth Marketing</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEUUlEQVR4nO1b3U9TZxx+2hqqGXAaxMTxWT92ZT9QpyCNMI0avUBjdMm48Q8wMZlk4kdcdjM0meKF7Ha7YMncJiZoFIOIYqK1KNGOYiJ0RnGhWJFKQ9cv0nYX5izQ93xiym+057njPb/3fT7O7305PWl1UAFbbW1KTT0VBp1OndJa2cLFYloMcmHopS4udvOAvAfBdLLBuBCEuoHpgGw1Dwh708sVZBvSPUqeAbmA/wLIhbvPY7ZXffpAroD3rG0BagHU0OVi+89GzneAFgC1AGpoAVALoIYWALUAaixRO2GV2YwNdhtsFgvMlZUoLChAYWEhlhgMiESiCEfCeOP34++xMbx8NYrBoSEMe71IJBLzFplJTsUPQnUOB746eAB2q1W1gUgkgv6BAfT23YPT5UI0FlM0byE4ZQPgOA6nm4+htrqaufbE7UbXrR4MDg1hMhBAMpmEiePw2Zo12FZfh13bt8NgMMyZ83P7L/ipvV1S/EJySm6B8rIy/Nh6HsXLl88ZTyQSOHu+FTd7epg5bycm8HZiAg9cLvzecQXnWr7HiuJiScOUnKKHoInj0HqmhRECAK0X2wSFpMP74gW+Pn4C8XhckRgKTtEATh37BqUlJcz485ERXOvqUrQ4ALwaHcWlyx2Kaik4BQOwWSxw1NQITrhy9SpSKXUfIDs6O5FMJiVrKDgBkQAONTYKFidTKTxw9asSAgCB9+/hefZMsoaCExA4BI1GIzaurxIs9vv9CAaDqsUAwOGjTaLXKDh5MB1gt1qQl5cnWDz6+vW8hMiBgpMHE0BZSalo8btAICMiKDh5MAGYTJxocTQazYgICk4ezBmQ/0m+aLGS/61NR47gwL69kjXftZzB7bt3STl5MB0Q+ickuojYPv1YUHDyYAKYmhI/cZcajbILXmhrg2PHTjh27ETn9euKRFBw8mACGPP5RIuLiopULa4UFJw8mADcHo/ovqsoK8+ICApOHkwAsVgMT9xuweKST1ciP1/8wJovKDh5CD4Kt1/6TbhYr0fNpk0ZEULBCYgE8KfHA2e/8PP3/oaGjAih4AQkPg63/HAOvvFxZrzKZsUXW7dmRAwFp2gAU8Egmk6ewrvJSebatyeOY/PnGyUXLi8txXq7XZUYCk7Zd4ImjsPp5mZsqd7MXOvt60P37V4Me72YCgaxbNlSrF21Gtvq69GwZzfzEDPm8+HXPy7jRnc3ZmZm/hecit4K63Q61DkcaPzyIKzr1smVz0E8HsfDR4/Rc+cO7t2/r+glxUJyqv5+wGqzGRuqqmC3WlBZUfHhHX1BAfQGA0KhEKanp+EbH8ew9y88HxnBwNOnCIfDqgwsJKf2BQlqAdTQAqAWQA0tAGoB1NACoBZADS0ANT8wyjYMOp06rQOoBVBDD6j7nV22gPesTx/IBcz2qm2B2X/kQheke2Q6IJtDEPImaTZbXpZI3VTJMyAbukHOgyqDi6Uj1Ny4fwGRiVoyY+qLogAAAABJRU5ErkJggg==">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Edlio Engagement Tracker">
+<meta property="og:description" content="Live project status for the Edlio Agents launch and website foundation, by Guided Growth Marketing. Updated twice weekly.">
+<meta property="og:image" content="https://edlio.guidedgrowthmktg.com/og-image.png">
+<meta property="og:url" content="https://edlio.guidedgrowthmktg.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Edlio Engagement Tracker">
+<meta name="twitter:description" content="Live project status, updated twice weekly. Guided Growth Marketing and Edlio.">
+<meta name="twitter:image" content="https://edlio.guidedgrowthmktg.com/og-image.png">
 <style>
   :root{
     color-scheme: light;
@@ -111,6 +121,21 @@
     header,section{border:1px solid #ccc;box-shadow:none;break-inside:avoid;}
     .pill,.bar span,header,.sec-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   }
+
+  .trackbadge{display:inline-flex;align-items:center;gap:7px;margin-top:13px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.10);color:var(--header-text);}
+  .trackbadge .tb-dot{width:8px;height:8px;border-radius:50%;}
+  .tb-green .tb-dot{background:#5fbf6a;} .tb-amber .tb-dot{background:#e0a93f;} .tb-done .tb-dot{background:#7fd089;}
+  .mini{height:5px;width:90px;flex:0 0 auto;background:var(--bar-track);border-radius:4px;overflow:hidden;margin-left:14px;}
+  .mini span{display:block;height:100%;background:var(--complete);border-radius:4px;}
+  .viewlink{font-size:11.5px;font-weight:600;color:var(--edlio);text-decoration:none;white-space:nowrap;margin-left:8px;}
+  .viewlink:hover{text-decoration:underline;}
+  .feed .fitem{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line-soft);}
+  .feed .fitem:last-child{border-bottom:none;}
+  .feed .fdate{flex:0 0 80px;color:var(--muted);font-size:12px;font-weight:600;padding-top:1px;}
+  .feed .ftext{color:var(--text-soft);font-size:13.5px;}
+  .nspra{display:flex;align-items:center;gap:14px;background:var(--note-bg);border:1px solid var(--line);border-left:4px solid var(--edlio);border-radius:10px;padding:14px 18px;margin-bottom:22px;}
+  .nspra .nlabel{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--edlio);font-weight:700;margin-bottom:3px;}
+  .nspra .ntext{font-size:13.5px;color:var(--text-soft);} .nspra .ntext b{color:var(--text);}
 </style>
 </head>
 <body>
@@ -130,6 +155,7 @@
         <div class="eyebrow">Engagement Tracker</div>
         <h1>Edlio Agents Launch &amp; Website Foundation</h1>
         <div class="sub" id="subline"></div>
+        <div class="trackbadge" id="trackbadge"></div>
       </div>
       <div class="hmeta" id="hmeta"></div>
     </div>
@@ -138,7 +164,7 @@
   <div class="toolbar">
     <button class="act" onclick="downloadPDF()">Download PDF</button>
     <button class="act ghost" id="themeBtn" onclick="toggleTheme()">Dark mode</button>
-    <div class="updated">Last updated <b id="updated">—</b> &middot; Next update <b id="nextupd">—</b></div>
+    <div class="updated">Last updated <b id="updated">-</b> &middot; Next update <b id="nextupd">-</b></div>
   </div>
 
   <section class="overview">
@@ -158,7 +184,20 @@
     </div>
   </section>
 
+  <section class="feed" id="feed" style="display:none">
+    <div class="sec-head"><span class="sec-num" style="background:var(--olive)">&#8635;</span><h3>Recent Updates</h3></div>
+    <div id="feed-list"></div>
+  </section>
+
   <div id="sections"></div>
+
+  <!-- NSPRA callout (delete this block to remove) -->
+  <div class="nspra">
+    <div>
+      <div class="nlabel">July Deadline</div>
+      <div class="ntext"><b>NSPRA National Seminar:</b> July 19-22, 2026, New Orleans. Agents page and demo assets land before this.</div>
+    </div>
+  </div>
 
   <section class="timeline">
     <div class="sec-head"><span class="sec-num" style="background:var(--olive)">★</span><h3>Milestone Timeline</h3></div>
@@ -212,6 +251,7 @@
     ]
   },
   "lastUpdated": "2026-06-16",
+  "log": [ { "date": "2026-06-15", "text": "Engagement kicked off and project tracker set up." } ],
   "sections": [
     { "num": "1", "title": "Edlio Agents Product Page", "items": [
       { "id": "p1a", "label": "New product page live at edlio.com/agents", "status": "notstarted", "target": "2026-06-30", "done": "" },
@@ -232,8 +272,8 @@
       { "id": "p3d", "label": "SEO improvements & FAQ sections added to priority pages", "status": "notstarted", "target": "2026-08-08", "done": "" }
     ]},
     { "num": "R", "title": "Reporting", "items": [
-      { "id": "r1", "label": "Monthly performance report — Month 1 (organic visibility, site health, key pages)", "status": "notstarted", "target": "2026-07-15", "done": "" },
-      { "id": "r2", "label": "Monthly performance report — Month 2 + recommendations", "status": "notstarted", "target": "2026-08-17", "done": "" },
+      { "id": "r1", "label": "Monthly performance report - Month 1 (organic visibility, site health, key pages)", "status": "notstarted", "target": "2026-07-15", "done": "" },
+      { "id": "r2", "label": "Monthly performance report - Month 2 + recommendations", "status": "notstarted", "target": "2026-08-17", "done": "" },
       { "id": "r3", "label": "End-of-engagement summary & handoff documentation", "status": "notstarted", "target": "2026-08-17", "done": "" }
     ]}
   ]
@@ -279,6 +319,22 @@ function setTheme(t){
   applyGgmLogo(t);
 }
 
+function renderBadge(pct){
+  const b=document.getElementById('trackbadge'); if(!b) return;
+  const start=new Date('2026-06-15T00:00:00'), end=new Date('2026-08-17T00:00:00'), t=new Date(); t.setHours(0,0,0,0);
+  let frac=(t-start)/(end-start); frac=Math.max(0,Math.min(1,frac)); const expected=frac*100;
+  let cls,txt;
+  if(pct>=100){cls='tb-done';txt='All deliverables complete';}
+  else if(pct>=expected*0.7){cls='tb-green';txt='On track for NSPRA \u00b7 Jul 19';}
+  else {cls='tb-amber';txt='Actively in progress \u00b7 NSPRA Jul 19';}
+  b.className='trackbadge '+cls; b.innerHTML='<span class="tb-dot"></span>'+txt;
+}
+function renderFeed(){
+  const log=(DATA.log||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6);
+  const sec=document.getElementById('feed'), list=document.getElementById('feed-list');
+  if(!log.length){ sec.style.display='none'; return; }
+  sec.style.display=''; list.innerHTML=log.map(e=>`<div class="fitem"><span class="fdate">${fmt(e.date)}</span><span class="ftext">${e.text||''}</span></div>`).join('');
+}
 function nextSync(){ const d=new Date(); d.setHours(0,0,0,0); for(let i=1;i<=7;i++){ const x=new Date(d); x.setDate(d.getDate()+i); const w=x.getDay(); if(w===1||w===5) return x; } return null; }
 function render(){
   const e=DATA.engagement;
@@ -290,16 +346,17 @@ function render(){
   const root=document.getElementById('sections'); root.innerHTML="";
   DATA.sections.forEach(sec=>{
     const el=document.createElement('section');
+    const sc=sec.items.filter(i=>i.status==="complete").length, st=sec.items.length, sp=Math.round(sc/st*100);
     el.innerHTML=`
       <div class="sec-head"><span class="sec-num">${sec.num}</span><h3>${sec.title}</h3>
-        <span class="sec-prog">${sec.items.filter(i=>i.status==="complete").length}/${sec.items.length} complete</span></div>
+        <span class="sec-prog">${sc}/${st} complete</span><div class="mini"><span style="width:${sp}%"></span></div></div>
       <table>
         <thead><tr><th class="deliv">Deliverable</th><th class="col-status">Status</th><th class="col-date">Target</th><th class="col-date">Completed</th></tr></thead>
         <tbody>${sec.items.map(it=>`<tr>
-          <td class="deliv">${it.label}</td>
+          <td class="deliv">${it.label}${it.link?` <a class="viewlink" href="${it.link}" target="_blank" rel="noopener">View &#8599;</a>`:''}</td>
           <td><span class="pill s-${STATUS_CLASS[it.status]}">${STATUS_LABEL[it.status]}</span></td>
-          <td><span class="date-val ${it.target?'':'none'}">${it.target?fmt(it.target):'—'}</span></td>
-          <td><span class="date-val ${it.done?'':'none'}">${it.done?fmt(it.done):'—'}</span></td></tr>`).join('')}</tbody>
+          <td><span class="date-val ${it.target?'':'none'}">${it.target?fmt(it.target):'-'}</span></td>
+          <td><span class="date-val ${it.done?'':'none'}">${it.done?fmt(it.done):'-'}</span></td></tr>`).join('')}</tbody>
       </table>`;
     root.appendChild(el);
   });
@@ -313,8 +370,9 @@ function render(){
   document.getElementById('barfill').style.width=pct+"%";
   document.getElementById('counts').innerHTML=`<b>${c}</b> complete &middot; <b>${p}</b> in progress &middot; <b>${n}</b> upcoming &middot; <b>${total}</b> total deliverables`;
   document.getElementById('hmeta').innerHTML=`<div class="mitem"><span class="ml">Timeline</span><span class="mv">${e.dates}</span></div><div class="mitem"><span class="ml">Engagement</span><span class="mv">${e.note}</span></div><div class="mitem"><span class="ml">Progress</span><span class="mv">${pct}% complete</span></div>`;
-  document.getElementById('updated').textContent=DATA.lastUpdated||"—";
-  const _ns=nextSync(); document.getElementById('nextupd').textContent=_ns?_ns.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):"—";
+  document.getElementById('updated').textContent=DATA.lastUpdated||"-";
+  const _ns=nextSync(); document.getElementById('nextupd').textContent=_ns?_ns.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):"-";
+  renderBadge(pct); renderFeed();
 }
 
 (function init(){
