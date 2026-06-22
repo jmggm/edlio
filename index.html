@@ -504,7 +504,7 @@ function renderFeed(){
     ? log.map(e=>`<div class="fitem"><span class="fdate">${fmt(e.date)}</span><span class="ftext">${e.text||''}</span></div>`).join('')
     : '<div class="fitem"><span class="ftext" style="color:var(--muted)">No updates yet. This feed fills in as work ships.</span></div>';
 }
-function nextSync(){ const d=new Date(); d.setHours(0,0,0,0); for(let i=1;i<=7;i++){ const x=new Date(d); x.setDate(d.getDate()+i); const w=x.getDay(); if(w===1||w===5) return x; } return null; }
+function nextSync(){ const d=new Date(); d.setHours(0,0,0,0); for(let i=1;i<=7;i++){ const x=new Date(d); x.setDate(d.getDate()+i); const w=x.getDay(); if(w===1||w===3||w===5) return x; } return null; }
 function render(){
   const e=DATA.engagement;
   document.getElementById('subline').textContent = "Prepared for " + (e.preparedFor||"");
