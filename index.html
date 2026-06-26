@@ -64,7 +64,11 @@
   body.printing .toolbar{display:none;}
 
   section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 24px 18px;margin-bottom:22px;}
-  .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--sec-border);margin-bottom:6px;}
+  .sec-head{display:flex;align-items:center;gap:12px;padding:16px 0 10px;border-bottom:2px solid var(--sec-border);margin-bottom:6px;cursor:pointer;user-select:none;}
+  .sec-head .chev{font-size:11px;color:var(--muted);transition:transform .15s;flex:0 0 auto;}
+  .sec-head.collapsed .chev{transform:rotate(-90deg);}
+  .sec-head.collapsed{border-bottom-width:0;margin-bottom:0;padding-bottom:14px;}
+  .sec-body[hidden]{display:none;}
   .sec-num{background:var(--sec-num-bg);color:#fff;font-weight:700;font-size:13px;width:26px;height:26px;border-radius:6px;
     display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .sec-head h3{margin:0;font-size:15px;letter-spacing:.6px;text-transform:uppercase;}
@@ -142,7 +146,7 @@
   .tab.active{color:var(--text);border-bottom-color:var(--edlio);}
   .view[hidden]{display:none;}
   body.printing .tabs{display:none;}
-  @media print{ .tabs{display:none;} .view[hidden]{display:block !important;} }
+  @media print{ .tabs{display:none;} .view[hidden]{display:block !important;} .sec-body[hidden]{display:block !important;} .sec-head{cursor:default;} .sec-head .chev{display:none;} }
 </style>
 </head>
 <body>
@@ -171,6 +175,7 @@
   <div class="toolbar">
     <button class="act" onclick="downloadPDF()">Save as PDF</button>
     <button class="act ghost" id="themeBtn" onclick="toggleTheme()">Dark mode</button>
+    <button class="act ghost" onclick="toggleAll()" id="expandBtn">Expand all</button>
     <div class="updated">Last updated <b id="updated">-</b> &middot; Next update <b id="nextupd">-</b></div>
   </div>
 
@@ -548,6 +553,17 @@ function renderFeed(){
     : '<div class="fitem"><span class="ftext" style="color:var(--muted)">No updates yet. This feed fills in as work ships.</span></div>';
 }
 function nextSync(){ const d=new Date(); d.setHours(0,0,0,0); for(let i=1;i<=7;i++){ const x=new Date(d); x.setDate(d.getDate()+i); const w=x.getDay(); if(w===1||w===3||w===5) return x; } return null; }
+function toggleSec(head){
+  const body=document.getElementById(head.dataset.body);
+  const collapsed = head.classList.toggle("collapsed");
+  if(body) body.hidden = collapsed;
+}
+function toggleAll(){
+  const heads=document.querySelectorAll("#sections .sec-head");
+  const anyOpen=[...heads].some(h=>!h.classList.contains("collapsed"));
+  heads.forEach(h=>{ const body=document.getElementById(h.dataset.body); h.classList.toggle("collapsed",anyOpen); if(body) body.hidden=anyOpen; });
+  document.getElementById("expandBtn").textContent = anyOpen ? "Expand all" : "Collapse all";
+}
 function render(){
   const e=DATA.engagement;
   document.getElementById('subline').textContent = "Prepared for " + (e.preparedFor||"");
@@ -556,12 +572,17 @@ function render(){
     `<div class="contact"><div class="cn">${c.name}</div><div class="cr">${c.role||''}</div><div class="co">${c.org||''}</div></div>`).join('');
 
   const root=document.getElementById('sections'); root.innerHTML="";
-  DATA.sections.forEach(sec=>{
+  DATA.sections.forEach((sec,idx)=>{
     const el=document.createElement('section');
     const sc=sec.items.filter(i=>i.status==="complete").length, st=sec.items.length, sp=Math.round(sc/st*100);
+    const allComplete = st>0 && sc===st;
+    const bodyId='secbody-'+idx;
     el.innerHTML=`
-      <div class="sec-head"><span class="sec-num">${sec.num}</span><h3>${sec.title}</h3>
+      <div class="sec-head" role="button" tabindex="0" data-body="${bodyId}" onclick="toggleSec(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSec(this);}">
+        <span class="chev">&#9662;</span>
+        <span class="sec-num">${sec.num}</span><h3>${sec.title}</h3>
         <span class="sec-prog">${sc}/${st} complete</span><div class="mini"><span style="width:${sp}%"></span></div></div>
+      <div class="sec-body" id="${bodyId}">
       <table>
         <thead><tr><th class="deliv">Deliverable</th><th class="col-status">Status</th><th class="col-date">Target</th><th class="col-date">Completed</th></tr></thead>
         <tbody>${sec.items.map(it=>`<tr>
@@ -569,9 +590,14 @@ function render(){
           <td><span class="pill s-${STATUS_CLASS[it.status]}">${STATUS_LABEL[it.status]}</span></td>
           <td><span class="date-val ${it.target?'':'none'}">${it.target?fmt(it.target):'-'}</span></td>
           <td><span class="date-val ${it.done?'':'none'}">${it.done?fmt(it.done):'-'}</span></td></tr>`).join('')}</tbody>
-      </table>`;
+      </table>
+      </div>`;
     root.appendChild(el);
+    if(allComplete){ el.querySelector('.sec-head').classList.add('collapsed'); el.querySelector('.sec-body').hidden=true; }
   });
+  const _heads=document.querySelectorAll('#sections .sec-head');
+  const _anyOpen=[..._heads].some(h=>!h.classList.contains('collapsed'));
+  const _eb=document.getElementById('expandBtn'); if(_eb) _eb.textContent=_anyOpen?'Collapse all':'Expand all';
 
   const all=DATA.sections.flatMap(s=>s.items), total=all.length;
   const c=all.filter(i=>i.status==="complete").length;
